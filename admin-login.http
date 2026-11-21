@@ -1,0 +1,40 @@
+# 本文件仅连接完整学习版；IntelliJ HTTP Client 会自动保留 Cookie。
+@baseUrl = http://localhost:8082
+@adminUsername = admin
+@adminPassword = Admin123!2026
+
+### 1. 匿名会话获取 CSRF
+GET {{baseUrl}}/api/csrf
+
+> {% client.global.set("adminCsrfToken", response.body.token); %}
+
+### 2. 管理员登录（登录后 Session 和 CSRF 会更换）
+POST {{baseUrl}}/api/admin/auth/login
+Content-Type: application/json
+X-CSRF-TOKEN: {{adminCsrfToken}}
+
+{
+  "username": "{{adminUsername}}",
+  "password": "{{adminPassword}}"
+}
+
+### 3. 当前身份
+GET {{baseUrl}}/api/session
+
+### 4. 运营概览
+GET {{baseUrl}}/api/admin/dashboard
+
+### 5. 房源管理
+GET {{baseUrl}}/api/admin/catalog/rooms?page=1&pageSize=10
+
+### 6. 登录后的新 CSRF
+GET {{baseUrl}}/api/csrf
+
+> {% client.global.set("adminCsrfToken", response.body.token); %}
+
+### 7. 退出登录
+POST {{baseUrl}}/api/admin/auth/logout
+X-CSRF-TOKEN: {{adminCsrfToken}}
+
+### 8. 公开房源（无需登录）
+GET {{baseUrl}}/api/public/listings?page=1&pageSize=12
