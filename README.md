@@ -2,7 +2,7 @@
 
 一个可在本机独立运行的租赁平台：**找房 → 收藏 → 看房预约 → 管理员审核 → 签约 → 账单 → 站内通知**。包含租客前台与管理工作台，使用真实后端 API 和 MySQL 数据；无需 Docker。
 
-本目录独立于 `../shangting-apartment`。默认服务端口 **8082**、数据库 **shangting_apartment_complete**、专用 Redis **6381**；不会复用原项目的数据库、Cookie 或 Redis 会话。
+默认服务端口 **8082**、数据库 **shangting_apartment_complete**、专用 Redis **6381**，使用独立的数据库账户、Cookie 和 Redis 会话命名空间。
 
 ## 技术栈
 
